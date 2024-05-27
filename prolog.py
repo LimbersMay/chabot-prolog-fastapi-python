@@ -31,7 +31,7 @@ def transformar_resultado(result):
     # Procesar las sugerencias de hábitos alternativos
     for sugerencia in result[0]['SugerenciaAlternativaHabitos']:
         habito_actual, alternativa, beneficio = sugerencia['args'][0]['args'][0], sugerencia['args'][0]['args'][1], sugerencia['args'][1]
-        entrada = {"nombre": alternativa, "beneficios:": f"Puedes considerar {alternativa} como una alternativa a {habito_actual} ya que ambas ayudan a {beneficio}"}
+        entrada = {"nombre": alternativa, "beneficios": f"Puedes considerar {alternativa} como una alternativa a {habito_actual} ya que ambas ayudan a {beneficio}"}
         agregar_sin_duplicados(response["HabitosAlternativosABuenosHabitos"], habito_actual, entrada)
 
     return response
