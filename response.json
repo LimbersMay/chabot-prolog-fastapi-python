@@ -1,0 +1,36 @@
+{
+   "habitosMejorarAspectos": {
+       "creatividad": [
+           {
+               "nombre": "pintura",
+               "beneficios": "desarrollar tu creatividad y mejorar tu bienestar emocional"
+           },
+           {
+               "nombre": "ceramica",
+               "beneficios": "desarrollar tu creatividad y habilidades artesanales"
+           }
+       ],
+       "conocimiento": [
+           {
+               "nombre": "leer",
+               "beneficios": "aumentar tu conocimiento y mejorar tus habilidades cognitivas"
+           }
+       ]
+   },
+   "HabitosAlternativosAMalosHabitos": {
+       "fumar": [
+           {
+               "nombre": "meditar",
+               "beneficios": "reducir el estrés y mejorar tu salud mental"
+           }
+       ]
+   },
+   "HabitosAlternativosABuenosHabitos": {
+       "correr": [
+           {
+               "nombre": "nadar",
+               "beneficios:": "Puedes considerar nadar como una alternativa a correr ya que ambas ayudan a tonificacion_muscular"
+           }
+       ]
+   }
+}
