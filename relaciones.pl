@@ -72,42 +72,65 @@ alternativa_habito_malo(sedentarismo, caminar).
 alternativa_habito_malo(saltarse_comidas, comer_saludable).
 alternativa_habito_malo(dormir_poco, dormir_bien).
 
-% Reglas para sugerir nuevos hábitos y alternativas
-sugerir_nuevo_habito(AspectoMejorar, HabitosUsuario, NuevoHabito) :-
+% Beneficios de cada hábito
+beneficio_de(correr, 'mejorar tu resistencia cardiovascular').
+beneficio_de(senderismo, 'fortalecer tus músculos y mejorar tu salud mental').
+beneficio_de(leer, 'aumentar tu conocimiento y mejorar tus habilidades cognitivas').
+beneficio_de(meditar, 'reducir el estrés y mejorar tu salud mental').
+beneficio_de(caminar, 'mejorar tu salud general y bienestar').
+beneficio_de(nadar, 'mejorar tu resistencia cardiovascular y tonificar tu cuerpo').
+beneficio_de(bicicleta, 'fortalecer tus piernas y mejorar tu salud cardiovascular').
+beneficio_de(yoga, 'mejorar tu flexibilidad y reducir el estrés').
+beneficio_de(jardineria, 'mejorar tu salud mental y bienestar').
+beneficio_de(cocinar, 'aprender a alimentarte de forma saludable y mejorar tus habilidades culinarias').
+beneficio_de(escribir, 'expresar tus pensamientos y emociones de forma creativa').
+beneficio_de(baile, 'mejorar tu coordinación y bienestar general').
+beneficio_de(pintura, 'desarrollar tu creatividad y mejorar tu bienestar emocional').
+beneficio_de(tocar_guitarra, 'mejorar tu habilidad musical y bienestar emocional').
+beneficio_de(escultura, 'desarrollar tu creatividad y habilidades artesanales').
+beneficio_de(pesca, 'mejorar tu paciencia y bienestar general').
+beneficio_de(ceramica, 'desarrollar tu creatividad y habilidades artesanales').
+beneficio_de(origami, 'mejorar tu precisión y habilidades manuales').
+beneficio_de(coleccionar_monedas, 'aprender sobre historia y numismática').
+beneficio_de(beber_agua, 'mantenerte hidratado y mejorar tu salud general').
+beneficio_de(comer_saludable, 'nutrir tu cuerpo y mejorar tu salud general').
+beneficio_de(dormir_bien, 'descansar adecuadamente y mejorar tu salud general').
+beneficio_de(hacer_ejercicio, 'mejorar tu salud general y bienestar').
+beneficio_de(meditar, 'reducir el estrés y mejorar tu salud mental').
+
+% Reglas para sugerir nuevos hábitos y alternativas con beneficios
+sugerir_nuevo_habito(AspectoMejorar, HabitosUsuario, AspectoMejorar-NuevoHabito-Beneficio) :-
     es_bueno_para(AspectoMejorar, NuevoHabito),
-    \+ (member(Problema, HabitosUsuario), es_contraindicativo_para(NuevoHabito, Problema)),
-    format('Si quieres mejorar en el aspecto de ~w, entonces te sugiero considerar: ~w.~n', [AspectoMejorar, NuevoHabito]).
+    beneficio_de(NuevoHabito, Beneficio),
+    \+ (member(Problema, HabitosUsuario), es_contraindicativo_para(NuevoHabito, Problema)).
 
-sugerir_contraindicacion(HabitoActual, HabitosUsuario, AlternativaHabitoPerjudicial) :-
+sugerir_contraindicacion(HabitoActual, HabitosUsuario, HabitoActual-AlternativaHabitoPerjudicial-Beneficio) :-
     alternativa_habito_malo(HabitoActual, AlternativaHabitoPerjudicial),
+    beneficio_de(AlternativaHabitoPerjudicial, Beneficio),
     \+ (member(Problema, HabitosUsuario), es_contraindicativo_para(AlternativaHabitoPerjudicial, Problema)),
-    format('Sugiero ~w como alternativa más saludable a ~w.~n', [AlternativaHabitoPerjudicial, HabitoActual]).
+    write(HabitoActual).
 
-sugerir_alternativa(HabitoActual, HabitosUsuario, Alternativa) :-
+sugerir_alternativa(HabitoActual, HabitosUsuario, HabitoActual-Alternativa-Beneficio) :-
     alternativa_habito(HabitoActual, Alternativa),
     es_bueno_para(Beneficio, Alternativa),
-    \+ (member(Problema, HabitosUsuario), es_contraindicativo_para(Alternativa, Problema)),
-    format('Puedes considerar ~w como alternativa a ~w ya que ambos sirven para: ~w.~n', [Alternativa, HabitoActual, Beneficio]).
+    \+ (member(Problema, HabitosUsuario), es_contraindicativo_para(Alternativa, Problema)).
 
 % Regla para obtener sugerencias en base a múltiples hábitos del usuario
-obtener_sugerencias(ListaHabitos, HabitosUsuario, Sugerencias) :-
-    findall(NuevoHabito, (
+obtener_sugerencias(ListaHabitos, HabitosUsuario, SugerenciaNuevosHabitos, SugerenciaAlternativaHabitosPerjudiciales, SugerenciaAlternativaHabitos) :-
+    findall(AspectoMejorar-NuevoHabito-Beneficio, (
         member(AspectoMejorar, ListaHabitos),
-        sugerir_nuevo_habito(AspectoMejorar, HabitosUsuario, NuevoHabito)
-    ), SugerenciasHabitos),
+        sugerir_nuevo_habito(AspectoMejorar, HabitosUsuario, AspectoMejorar-NuevoHabito-Beneficio)
+    ), SugerenciaNuevosHabitos),
 
-    findall(AlternativaHabitoPerjudicial, (
+    findall(HabitoActual-AlternativaHabitoPerjudicial-Beneficio, (
         member(Habito, ListaHabitos),
-        sugerir_contraindicacion(Habito, HabitosUsuario, AlternativaHabitoPerjudicial)
-    ), SugerenciasHabitoPerjudiciales),
+        sugerir_contraindicacion(Habito, HabitosUsuario, HabitoActual-AlternativaHabitoPerjudicial-Beneficio)
+    ), SugerenciaAlternativaHabitosPerjudiciales),
 
-    findall(Alternativa, (
+    findall(HabitoActual-Alternativa-Beneficio, (
         member(Habito, ListaHabitos),
-        sugerir_alternativa(Habito, HabitosUsuario, Alternativa)
-    ), SugerenciasAlternativas),
-
-    append([SugerenciasHabitos, SugerenciasHabitoPerjudiciales, SugerenciasAlternativas], SugerenciasTotales),
-    list_to_set(SugerenciasTotales, Sugerencias).
+        sugerir_alternativa(Habito, HabitosUsuario, HabitoActual-Alternativa-Beneficio)
+    ), SugerenciaAlternativaHabitos).
 
 % Interacción con el usuario
 inicio :-
@@ -130,13 +153,26 @@ obtener_habitos_usuario(Habitos) :-
     append([AspectosMejorar, HabitosMalos, HabitosActuales, ProblemasSalud], Habitos).
 
 analizar_habitos(Habitos) :-
-    obtener_sugerencias(Habitos, Habitos, Sugerencias),
+    obtener_sugerencias(Habitos, Habitos, SugerenciaNuevosHabitos, SugerenciaAlternativaHabitosPerjudiciales, SugerenciaAlternativaHabitos),
     nl,
-    write('Basado en tus hábitos actuales, te sugiero considerar los siguientes nuevos hábitos o alternativas:'),
+    write('Basado en tus hábitos actuales, te sugiero considerar los siguientes nuevos hábitos:'),
     nl,
-    imprimir_lista(Sugerencias).
+    imprimir_lista(SugerenciaNuevosHabitos),
+    nl,
+    write('Alternativas a hábitos perjudiciales:'),
+    nl,
+    imprimir_lista(SugerenciaAlternativaHabitosPerjudiciales),
+    nl,
+    write('Otras alternativas:'),
+    nl,
+    imprimir_lista(SugerenciaAlternativaHabitos).
 
 imprimir_lista([]).
-imprimir_lista([Cabeza|Cola]) :-
-    write('- '), write(Cabeza), nl,
+imprimir_lista([Aspecto-Habito-Beneficio|Cola]) :-
+    write('- '), write(Aspecto), write(': '), write(Habito), write(' ('), write(Beneficio), write(')'), nl,
     imprimir_lista(Cola).
+
+% Regla adicional para obtener sugerencias como listas separadas en lugar de imprimirlas
+obtener_sugerencias_lista(ListaHabitos, HabitosUsuario, SugerenciaNuevosHabitos, SugerenciaAlternativaHabitosPerjudiciales, SugerenciaAlternativaHabitos) :-
+    obtener_sugerencias(ListaHabitos, HabitosUsuario, SugerenciaNuevosHabitos, SugerenciaAlternativaHabitosPerjudiciales, SugerenciaAlternativaHabitos).
+
