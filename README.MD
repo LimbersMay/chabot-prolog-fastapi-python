@@ -35,75 +35,6 @@ Ahora puedes acceder a la API en [http://localhost:8000](http://localhost:8000)
 
 - **Ejemplo**:
 
-**1. Hábitos para mejorar aspectos de la vida**
-```json
-{
-  "habitos": [
-    "salud_cardiovascular" -> "caminar",
-    "flexibilidad" -> "yoga",
-    "resistencia" -> "correr",
-    "conocimiento" -> "leer",
-    "tonificacion_muscular" -> "nadar",
-    "reduccion_estres" -> "meditar",
-    "salud_cardiovascular" -> "bicicleta",
-    "salud_mental" -> "jardineria",
-    "alimentacion_saludable" -> "cocinar",
-    "expresion_personal" -> "escribir",
-    "coordinacion" -> "baile",
-    "creatividad" -> "pintura",
-    "habilidad_musical" -> "tocar_guitarra",
-    "resistencia" -> "senderismo",
-    "creatividad" -> "fotografia",
-    "habilidad_artesanal" -> "escultura",
-    "paciencia" -> "pesca",
-    "creatividad" -> "ceramica",
-    "precision" -> "origami",
-    "conocimiento_historico" -> "coleccionar_monedas"
-  ]
-}
-```
-
-**2. Hábitos perjudiciales**
-```json
-{
-  "habitos": [
-    "fumar",
-    "consumir_alcohol",
-    "sedentarismo",
-    "saltarse_comidas",
-    "dormir_poco"
-    ]
-}
-```
-
-**3. Problemas de salud**
-```json
-{
-  "habitos": [
-    "problemas_articulares",
-    "infecciones_oreja",
-    "problemas_espalda",
-    "problemas_rodilla",
-    "alergia_agua",
-    "problemas_pies",
-    "hipertension_no_controlada",
-    "problemas_rodilla",
-    "alergia_polvo",
-    "alergia_pintura",
-    "depresion_severa",
-    "alergia_polen",
-    "problemas_vista",
-    "artritis_manos",
-    "problemas_destreza",
-    "alergia_arcilla",
-    "problemas_manos",
-    "alergia_alimentos",
-    "polvo",
-    "hipertension_no_controlada"
-  ]
-}
-```
-
 ### Ejemplo de consulta
 ```js
 fetch("http://127.0.0.1:8000/habitos", {
@@ -170,5 +101,74 @@ fetch("http://127.0.0.1:8000/habitos", {
             }
         ]
     }
+}
+```
+
+**1. Hábitos para conseguir objetivos**
+```json
+{
+  "habitos": [
+    "salud_cardiovascular" -> "caminar",
+    "flexibilidad" -> "yoga",
+    "resistencia" -> "correr",
+    "conocimiento" -> "leer",
+    "tonificacion_muscular" -> "nadar",
+    "reduccion_estres" -> "meditar",
+    "salud_cardiovascular" -> "bicicleta",
+    "salud_mental" -> "jardineria",
+    "alimentacion_saludable" -> "cocinar",
+    "expresion_personal" -> "escribir",
+    "coordinacion" -> "baile",
+    "creatividad" -> "pintura",
+    "habilidad_musical" -> "tocar_guitarra",
+    "resistencia" -> "senderismo",
+    "creatividad" -> "fotografia",
+    "habilidad_artesanal" -> "escultura",
+    "paciencia" -> "pesca",
+    "creatividad" -> "ceramica",
+    "precision" -> "origami",
+    "conocimiento_historico" -> "coleccionar_monedas"
+  ]
+}
+```
+
+**2. Hábitos perjudiciales**
+```json
+{
+  "habitos": [
+    "fumar",
+    "consumir_alcohol",
+    "sedentarismo",
+    "saltarse_comidas",
+    "dormir_poco"
+    ]
+}
+```
+
+**3. Problemas de salud**
+```json
+{
+  "habitos": [
+    "problemas_articulares",
+    "infecciones_oreja",
+    "problemas_espalda",
+    "problemas_rodilla",
+    "alergia_agua",
+    "problemas_pies",
+    "hipertension_no_controlada",
+    "problemas_rodilla",
+    "alergia_polvo",
+    "alergia_pintura",
+    "depresion_severa",
+    "alergia_polen",
+    "problemas_vista",
+    "artritis_manos",
+    "problemas_destreza",
+    "alergia_arcilla",
+    "problemas_manos",
+    "alergia_alimentos",
+    "polvo",
+    "hipertension_no_controlada"
+  ]
 }
 ```
