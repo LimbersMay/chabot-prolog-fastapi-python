@@ -105,7 +105,7 @@ Ahora puedes acceder a la API en [http://localhost:8000](http://localhost:8000)
 ```
 
 ### Ejemplo de consulta
-```
+```js
 fetch('http://localhost:8000/habitos', {
   method: 'POST',
   headers: {
