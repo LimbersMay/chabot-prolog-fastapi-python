@@ -4,7 +4,7 @@ import json
 # Función para transformar los resultados en el formato específico
 def transformar_resultado(result):
     response = {
-        "habitosMejorarAspectos": {},
+        "HabitosConseguirObjetivos": {},
         "HabitosAlternativosAMalosHabitos": {},
         "HabitosAlternativosABuenosHabitos": {}
     }
@@ -20,7 +20,7 @@ def transformar_resultado(result):
     for sugerencia in result[0]['SugerenciaNuevosHabitos']:
         aspecto, habito, beneficio = sugerencia['args'][0]['args'][0], sugerencia['args'][0]['args'][1], sugerencia['args'][1]
         entrada = {"nombre": habito, "beneficios": beneficio}
-        agregar_sin_duplicados(response["habitosMejorarAspectos"], aspecto, entrada)
+        agregar_sin_duplicados(response["HabitosConseguirObjetivos"], aspecto, entrada)
 
     # Procesar las sugerencias de alternativas a hábitos perjudiciales
     for sugerencia in result[0]['SugerenciaAlternativaHabitosPerjudiciales']:
