@@ -9,7 +9,6 @@
 ## Prerequisitos
 - [SWI-Prolog](https://www.swi-prolog.org/Download.html)
 - [Python](https://www.python.org/downloads/)
-- [FastAPI](https://fastapi.tiangolo.com/)
 
 ## Instalación
 1. Clonar el repositorio ```git clone git@github.com:LimbersMay/chabot-prolog-react-python.git```
