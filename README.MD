@@ -106,18 +106,69 @@ Ahora puedes acceder a la API en [http://localhost:8000](http://localhost:8000)
 
 ### Ejemplo de consulta
 ```js
-fetch('http://localhost:8000/habitos', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    habitos_usuario: [
-        "salud_cardiovascular",
-        "resistencia",
-        "fumar",
-        "problemas_manos"
-    ]
-  })
-})
+fetch("http://127.0.0.1:8000/habitos", {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        objetivos: [
+            "salud_cardiovascular",
+            "resistencia"
+        ],
+        problemas_salud: [
+            "problemas_articulares",
+            "problemas_espalda"
+        ],
+        habitos_perjudiciales: [
+            "fumar",
+            "consumir_alcohol"
+        ],
+        habitos: [
+            "caminar"
+        ]
+    })
+});
+```
+
+### Ejemplo de respuesta
+```json
+{
+    "HabitosConseguirObjetivos": {
+        "salud_cardiovascular": [
+            {
+                "nombre": "caminar",
+                "beneficios": "mejorar tu salud general y bienestar"
+            }
+        ],
+        "resistencia": [
+            {
+                "nombre": "senderismo",
+                "beneficios": "fortalecer tus músculos y mejorar tu salud mental"
+            }
+        ]
+    },
+    "HabitosAlternativosAMalosHabitos": {
+        "fumar": [
+            {
+                "nombre": "meditar",
+                "beneficios": "reducir el estrés y mejorar tu salud mental"
+            }
+        ],
+        "consumir_alcohol": [
+            {
+                "nombre": "meditar",
+                "beneficios": "reducir el estrés y mejorar tu salud mental"
+            }
+        ]
+    },
+    "HabitosAlternativosABuenosHabitos": {
+        "caminar": [
+            {
+                "nombre": "yoga",
+                "beneficios:": "Puedes considerar yoga como una alternativa a caminar ya que ambas ayudan a flexibilidad"
+            }
+        ]
+    }
+}
 ```
