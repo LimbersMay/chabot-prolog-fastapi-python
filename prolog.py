@@ -36,7 +36,7 @@ def transformar_resultado(result):
 
     return response
 
-def procesar_habitos(habitos_usuario):
+def procesar_perfil(habitos_usuario):
 
     with PrologMQI() as mqi:
         with mqi.create_thread() as prolog:
@@ -52,4 +52,26 @@ def procesar_habitos(habitos_usuario):
             else:
                 print("No se encontraron sugerencias.")
 
-            prolog.stop_query()
+
+def procesar_habitos_individuales(habitos_usuario: list[str]):
+    with PrologMQI() as mqi:
+        with mqi.create_thread() as prolog:
+            path = create_posix_path("relaciones.pl")
+            prolog.query(f'consult("{path}").')
+            
+            # Consultamos a Prolog para obtener sugerencias
+            result = prolog.query(f"obtener_sugerencias_lista({habitos_usuario}, {habitos_usuario}, SugerenciaNuevosHabitos, SugerenciaAlternativaHabitosPerjudiciales, SugerenciaAlternativaHabitos)")
+
+            if result:
+                response = transformar_resultado(result)
+                
+                # Eliminar los objetos vacíos
+                response = {k: v for k, v in response.items() if v}
+                
+                # Obtener solo un objeto
+                response = next(iter(response.values()))
+                
+                return response
+
+            else:
+                print("No se encontraron sugerencias.")
