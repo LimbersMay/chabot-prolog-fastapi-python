@@ -33,12 +33,6 @@ class Perfil(BaseModel):
 class Habitos(BaseModel):
     data: list[str]
 
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
 @app.post("/perfil")
 async def say_hello(perfil_usuario: Perfil):
 
