@@ -28,16 +28,25 @@
 Ahora puedes acceder a la API en [http://localhost:8000](http://localhost:8000)
 
 ## API
-> POST /habitos
+> POST /perfil
 - **Descripción**: Procesa los hábitos del usuario y devuelve sugerencias de nuevos hábitos, cambios de malos hábitos o alternativas a los hábitos actuales.
-- **Parámetros**:
-  - **habitos**: Lista de hábitos del usuario.
+- `Parámetros`:
+- **objetivos**: Lista de objetivos del usuario.
+- **problemas_salud**: Lista de problemas de salud del usuario.
+- **habitos_perjudiciales**: Lista de hábitos perjudiciales del usuario.
+- **habitos**: Lista de hábitos del usuario.
+- `Respuesta`: Devuelve una lista de hábitos que ayudan a conseguir los objetivos, alternativas a los malos hábitos y alternativas a los hábitos actuales.
 
-- **Ejemplo**:
+> POST /habitos
+- **Descripción**: Procesa los hábitos del usuario y devuelve sugerencias de nuevos hábitos.
+- `Parámetros`:
+- **data**: Lista de hábitos del usuario, pueden ser objetivos, problemas de salud o hábitos perjudiciales.
+- `Respuesta`: Devuelve una lista de hábitos que ayudan a conseguir los objetivos.
 
-### Ejemplo de consulta
+## Ejemplo de consulta, perfil del usuario
+### Request
 ```js
-fetch("http://127.0.0.1:8000/habitos", {
+fetch("http://127.0.0.1:8000/perfil", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -62,7 +71,7 @@ fetch("http://127.0.0.1:8000/habitos", {
 });
 ```
 
-### Ejemplo de respuesta
+### Response
 ```json
 {
     "HabitosConseguirObjetivos": {
@@ -98,6 +107,47 @@ fetch("http://127.0.0.1:8000/habitos", {
             {
                 "nombre": "yoga",
                 "beneficios:": "Puedes considerar yoga como una alternativa a caminar ya que ambas ayudan a flexibilidad"
+            }
+        ]
+    }
+}
+```
+
+## Ejemplo hábitos individuales, hábitos que ayuden a conseguir objetivos
+### Request
+```js
+fetch("http://127.0.0.1:8000/habitos", {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        data: [
+            "salud_cardiovascular",
+            "flexibilidad",
+        ]
+    })
+});
+```
+
+### Response
+```json
+{
+    "habitos": {
+        "salud_cardiovascular": [
+            {
+                "nombre": "caminar",
+                "beneficios": "mejorar tu salud general y bienestar"
+            },
+            {
+                "nombre": "bicicleta",
+                "beneficios": "mejorar tu salud general y bienestar"
+            }
+        ],
+        "flexibilidad": [
+            {
+                "nombre": "yoga",
+                "beneficios": "mejorar tu flexibilidad y reducir el estrés"
             }
         ]
     }
