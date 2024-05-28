@@ -1,10 +1,8 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-from prolog import procesar_habitos
+from prolog import procesar_perfil, procesar_habitos_individuales
 from fastapi.middleware.cors import CORSMiddleware
-
-app = FastAPI()
 
 app = FastAPI()
 
@@ -26,11 +24,14 @@ app.add_middleware(
 async def main():
     return {"message": "Hello World"}
 
-class Habitos(BaseModel):
+class Perfil(BaseModel):
     objetivos: list[str]
     problemas_salud: list[str]
     habitos_perjudiciales: list[str]
     habitos: list[str]
+
+class Habitos(BaseModel):
+    data: list[str]
 
 
 @app.get("/")
@@ -38,13 +39,17 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.post("/habitos")
-async def say_hello(habitos_usuario: Habitos):
+@app.post("/perfil")
+async def say_hello(perfil_usuario: Perfil):
 
     habitos = []
-    habitos.extend(habitos_usuario.objetivos)
-    habitos.extend(habitos_usuario.problemas_salud)
-    habitos.extend(habitos_usuario.habitos_perjudiciales)
-    habitos.extend(habitos_usuario.habitos)
+    habitos.extend(perfil_usuario.objetivos)
+    habitos.extend(perfil_usuario.problemas_salud)
+    habitos.extend(perfil_usuario.habitos_perjudiciales)
+    habitos.extend(perfil_usuario.habitos)
 
     return procesar_habitos(habitos)
+
+@app.post("/habitos")
+async def procesarHabitos(habitos: Habitos):
+    return procesar_habitos_individuales(habitos.data)
