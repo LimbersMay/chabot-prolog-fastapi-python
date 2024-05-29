@@ -19,7 +19,7 @@
 3. Activar el entorno virtual (Linux)
 ```source venv/bin/activate```
 Activar el entorno virtual (Windows)
-```source venv\Scripts\activate```
+```venv\Scripts\activate```
 
 
 4. Instalar las dependencias de Python
