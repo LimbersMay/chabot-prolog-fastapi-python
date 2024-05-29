@@ -16,8 +16,11 @@
 2. (Opcional) Crear un entorno virtual de Python
 ```virtualenv venv```
 
-3. Activar el entorno virtual
+3. Activar el entorno virtual (Linux)
 ```source venv/bin/activate```
+Activar el entorno virtual (Windows)
+```source venv\Scripts\activate```
+
 
 4. Instalar las dependencias de Python
 ```pip install -r requirements.txt```
