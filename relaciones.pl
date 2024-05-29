@@ -24,6 +24,7 @@ es_bueno_para(conocimiento_historico, coleccionar_monedas).
 
 % Hábitos y sus contraindicaciones
 es_contraindicativo_para(correr, problemas_articulares).
+es_contraindicativo_para(correr, artritis).
 es_contraindicativo_para(nadar, infecciones_oreja).
 es_contraindicativo_para(bicicleta, problemas_espalda).
 es_contraindicativo_para(senderismo, problemas_rodilla).
@@ -36,7 +37,7 @@ es_contraindicativo_para(pintura, alergia_pintura).
 es_contraindicativo_para(meditar, depresion_severa).
 es_contraindicativo_para(jardineria, alergia_polen).
 es_contraindicativo_para(fotografia, problemas_vista).
-es_contraindicativo_para(tocar_guitarra, artritis_manos).
+es_contraindicativo_para(tocar_guitarra, artritis).
 es_contraindicativo_para(origami, problemas_destreza).
 es_contraindicativo_para(ceramica, alergia_arcilla).
 es_contraindicativo_para(escribir, problemas_manos).
@@ -101,14 +102,13 @@ beneficio_de(meditar, 'reducir el estrés y mejorar tu salud mental').
 % Reglas para sugerir nuevos hábitos y alternativas con beneficios
 sugerir_nuevo_habito(AspectoMejorar, HabitosUsuario, AspectoMejorar-NuevoHabito-Beneficio) :-
     es_bueno_para(AspectoMejorar, NuevoHabito),
-    beneficio_de(NuevoHabito, Beneficio),
+    beneficio_de(NuevoHabito, Ya ),
     \+ (member(Problema, HabitosUsuario), es_contraindicativo_para(NuevoHabito, Problema)).
 
 sugerir_contraindicacion(HabitoActual, HabitosUsuario, HabitoActual-AlternativaHabitoPerjudicial-Beneficio) :-
     alternativa_habito_malo(HabitoActual, AlternativaHabitoPerjudicial),
     beneficio_de(AlternativaHabitoPerjudicial, Beneficio),
-    \+ (member(Problema, HabitosUsuario), es_contraindicativo_para(AlternativaHabitoPerjudicial, Problema)),
-    write(HabitoActual).
+    \+ (member(Problema, HabitosUsuario), es_contraindicativo_para(AlternativaHabitoPerjudicial, Problema)).
 
 sugerir_alternativa(HabitoActual, HabitosUsuario, HabitoActual-Alternativa-Beneficio) :-
     alternativa_habito(HabitoActual, Alternativa),
