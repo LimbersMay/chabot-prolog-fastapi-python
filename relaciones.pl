@@ -1,4 +1,5 @@
 % Base de conocimientos predefinida
+:- encoding(utf8).
 
 % Es bueno para
 es_bueno_para(salud_cardiovascular, caminar).
@@ -100,8 +101,8 @@ beneficio_de(hacer_ejercicio, 'mejorar tu salud general y bienestar').
 beneficio_de(meditar, 'reducir el estrés y mejorar tu salud mental').
 
 % Reglas para sugerir nuevos hábitos y alternativas con beneficios
-sugerir_nuevo_habito(AspectoMejorar, HabitosUsuario, AspectoMejorar-NuevoHabito-Beneficio) :-
-    es_bueno_para(AspectoMejorar, NuevoHabito),
+sugerir_nuevo_habito(Objetivo, HabitosUsuario, Objetivo-NuevoHabito-Beneficio) :-
+    es_bueno_para(Objetivo, NuevoHabito),
     beneficio_de(NuevoHabito, Ya ),
     \+ (member(Problema, HabitosUsuario), es_contraindicativo_para(NuevoHabito, Problema)).
 
@@ -117,9 +118,9 @@ sugerir_alternativa(HabitoActual, HabitosUsuario, HabitoActual-Alternativa-Benef
 
 % Regla para obtener sugerencias en base a múltiples hábitos del usuario
 obtener_sugerencias(ListaHabitos, HabitosUsuario, SugerenciaNuevosHabitos, SugerenciaAlternativaHabitosPerjudiciales, SugerenciaAlternativaHabitos) :-
-    findall(AspectoMejorar-NuevoHabito-Beneficio, (
-        member(AspectoMejorar, ListaHabitos),
-        sugerir_nuevo_habito(AspectoMejorar, HabitosUsuario, AspectoMejorar-NuevoHabito-Beneficio)
+    findall(Objetivo-NuevoHabito-Beneficio, (
+        member(Objetivo, ListaHabitos),
+        sugerir_nuevo_habito(Objetivo, HabitosUsuario, Objetivo-NuevoHabito-Beneficio)
     ), SugerenciaNuevosHabitos),
 
     findall(HabitoActual-AlternativaHabitoPerjudicial-Beneficio, (
@@ -131,41 +132,6 @@ obtener_sugerencias(ListaHabitos, HabitosUsuario, SugerenciaNuevosHabitos, Suger
         member(Habito, ListaHabitos),
         sugerir_alternativa(Habito, HabitosUsuario, HabitoActual-Alternativa-Beneficio)
     ), SugerenciaAlternativaHabitos).
-
-% Interacción con el usuario
-inicio :-
-    write('Hola, soy tu asistente de hábitos. Te ayudaré a mejorar tus hábitos.'),
-    nl,
-    write('Por favor, ingresa tus hábitos actuales (buenos y malos).'),
-    nl,
-    obtener_habitos_usuario(Habitos),
-    analizar_habitos(Habitos).
-
-obtener_habitos_usuario(Habitos) :-
-    write('¿Qué aspectos quieres mejorar? (Ingresa una lista de aspectos con formato [aspecto1, aspecto2, ...]): '),
-    read(AspectosMejorar),
-    write('¿Cuáles son tus hábitos malos? (Ingresa una lista de hábitos con formato [habito1, habito2, ...]): '),
-    read(HabitosMalos),
-    write('¿Qué hábitos tienes actualmente? (Ingresa una lista de hábitos con formato [habito1, habito2, ...]): '),
-    read(HabitosActuales),
-    write('¿Tienes algún problema de salud que deba considerar? (Ingresa una lista de problemas con formato [problema1, problema2, ...]): '),
-    read(ProblemasSalud),
-    append([AspectosMejorar, HabitosMalos, HabitosActuales, ProblemasSalud], Habitos).
-
-analizar_habitos(Habitos) :-
-    obtener_sugerencias(Habitos, Habitos, SugerenciaNuevosHabitos, SugerenciaAlternativaHabitosPerjudiciales, SugerenciaAlternativaHabitos),
-    nl,
-    write('Basado en tus hábitos actuales, te sugiero considerar los siguientes nuevos hábitos:'),
-    nl,
-    imprimir_lista(SugerenciaNuevosHabitos),
-    nl,
-    write('Alternativas a hábitos perjudiciales:'),
-    nl,
-    imprimir_lista(SugerenciaAlternativaHabitosPerjudiciales),
-    nl,
-    write('Otras alternativas:'),
-    nl,
-    imprimir_lista(SugerenciaAlternativaHabitos).
 
 imprimir_lista([]).
 imprimir_lista([Aspecto-Habito-Beneficio|Cola]) :-
