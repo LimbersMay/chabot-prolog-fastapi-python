@@ -11,22 +11,35 @@
 - [Python](https://www.python.org/downloads/)
 
 ## Instalación
-1. Clonar el repositorio ```git clone git@github.com:LimbersMay/chabot-prolog-react-python.git```
+1. Clonar el repositorio 
+```
+git clone git@github.com:LimbersMay/chabot-prolog-react-python.git
+```
 
 2. (Opcional) Crear un entorno virtual de Python
-```virtualenv venv```
+```
+virtualenv venv
+```
 
 3. Activar el entorno virtual (Linux)
-```source venv/bin/activate```
+```
+source venv/bin/activate
+```
 Activar el entorno virtual (Windows)
-```venv\Scripts\activate```
+```
+venv\Scripts\activate
+```
 
 
 4. Instalar las dependencias de Python
-```pip install -r requirements.txt```
+```
+pip install -r requirements.txt
+```
 
 5. Ejecutar el servidor de Python
-```fastapi dev server.py```
+```
+fastapi dev server.py
+```
 
 Ahora puedes acceder a la API en [http://localhost:8000](http://localhost:8000)
 
